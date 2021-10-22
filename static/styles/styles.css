@@ -1,0 +1,16 @@
+body{
+	background-color:#000000 !important;
+	color: #9900ff !important;
+    
+}
+.jumbotron{
+	background-color: #9900ff !important
+	
+}
+.jumbotron h1{
+	color:#000000;
+}
+.btn{
+	background-color: #000000 !important; 
+	color: 9900ff !important 
+}
