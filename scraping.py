@@ -12,6 +12,7 @@ def scrape_all():
     browser = Browser('chrome', **executable_path, headless=False)
 
     news_title, news_paragraph = mars_news(browser)
+
     #print("paragraph- " +news_paragraph)
 
     # Run all scraping functions and store results in a dictionary
@@ -20,7 +21,8 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now()
+        "last_modified": dt.datetime.now(),
+        "hemisphere_images": hemispheres(browser)
     }
 
     # Stop webdriver and return data
@@ -94,13 +96,47 @@ def mars_facts():
 
     except BaseException:
         return None
-
     # Assign columns and set index of dataframe
     df.columns=['Description', 'Mars', 'Earth']
     df.set_index('Description', inplace=True)
 
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html(classes="table table-striped")
+
+def hemispheres(browser):
+    # 1. Use browser to visit the URL 
+    url = 'https://marshemispheres.com/'
+
+    browser.visit(url)
+
+    # 2. Create a list to hold the images and titles.
+    hemisphere_image_urls = []
+
+    # 3. Write code to retrieve the image urls and titles for each hemisphere.
+    full_image_elems = browser.find_by_tag('img.thumb')
+
+    for x in range(len(full_image_elems)):
+        full_image_elems = browser.find_by_tag('img.thumb')
+        full_image_elems[x].click()
+        html = browser.html
+        
+        bs = soup(html, 'html.parser')
+        results = bs.find_all('div', class_='container')
+        for result in results:
+            # get image url
+            img_url_rel = result.find(text='Sample').parent['href']
+            img_url = f'{url}{img_url_rel}'
+            # get title 
+            title = result.find('h2', class_='title').text
+            hemisphere_image_urls.append({'img_url':img_url,'title':title})
+            #print(title)
+            #print(img_url)
+        browser.back()
+
+    # return list of dictionary
+    return hemisphere_image_urls
+    # 5. Quit the browser
+    browser.quit()
 
 if __name__ == "__main__":
 
