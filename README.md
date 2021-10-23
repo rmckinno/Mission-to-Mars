@@ -7,3 +7,6 @@ The purpose of this project is to use BeautifulSoup and Splinter to automate web
 - Featured Image - Scraped from https://spaceimages-mars.com 
 - Mars Facts - Scraped from https://galaxyfacts-mars.com
 - Mars Hemispheres - Scraped from https://marshemispheres.com
+
+![m to_m1](images/m_to_m1.png)
+![m_to_m2](images/m_to_m2.png)
